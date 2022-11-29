@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import AddAccount from "./components/AddAccount";
 import Home from "./pages/Home";
 
 function App() {

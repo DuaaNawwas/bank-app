@@ -3,14 +3,22 @@ import React from "react";
 import { connect } from "react-redux";
 
 function Main(props) {
+	const handleDelete = (id) => {
+		props.deleteAccount(id);
+		props.decrementAccounts();
+	};
 	return (
 		<>
-			<div className="w-9/12 mx-auto py-10">
+			<div className="w-2/3 py-10">
+				<h1 className="text-lg font-bold text-center">
+					Number of accounts: {props.numberOfAccounts}
+				</h1>
 				<Table>
 					<Table.Head>
 						<Table.HeadCell>Name</Table.HeadCell>
 						<Table.HeadCell>Account Number</Table.HeadCell>
 						<Table.HeadCell>Account Type</Table.HeadCell>
+						<Table.HeadCell></Table.HeadCell>
 					</Table.Head>
 					<Table.Body className="divide-y">
 						{props.accounts.map((acc) => {
@@ -21,6 +29,14 @@ function Main(props) {
 									</Table.Cell>
 									<Table.Cell>{acc.accountNumber}</Table.Cell>
 									<Table.Cell>{acc.accountType}</Table.Cell>
+									<Table.Cell>
+										<button
+											onClick={() => handleDelete(acc.id)}
+											className="text-red-500"
+										>
+											Delete
+										</button>
+									</Table.Cell>
 								</Table.Row>
 							);
 						})}
@@ -34,7 +50,15 @@ function Main(props) {
 const mapStateToProps = (state) => {
 	return {
 		accounts: state.accounts,
+		numberOfAccounts: state.numberOfAccounts,
 	};
 };
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		deleteAccount: (id) => dispatch({ type: "DELETE_ACCOUNT", payload: id }),
+		decrementAccounts: () => dispatch({ type: "DECREMENT_ACCOUNTS" }),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

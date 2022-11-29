@@ -63,10 +63,26 @@ const initState = {
 			accountType: "Savings",
 		},
 	],
+
+	numberOfAccounts: 10,
 };
 
 const reducer = (state = initState, action) => {
-	return state;
+	switch (action.type) {
+		case "ADD_ACCOUNT":
+			const data = { ...action.payload, id: state.numberOfAccounts + 1 };
+			const newData = [...state.accounts, data];
+			return { ...state, accounts: newData };
+		case "INCREMENT_ACCOUNTS":
+			return { ...state, numberOfAccounts: state.numberOfAccounts + 1 };
+		case "DELETE_ACCOUNT":
+			const newArr = state.accounts.filter((i) => i.id != action.payload);
+			return { ...state, accounts: newArr };
+		case "DECREMENT_ACCOUNTS":
+			return { ...state, numberOfAccounts: state.numberOfAccounts - 1 };
+		default:
+			return state;
+	}
 };
 
 const store = createStore(reducer);

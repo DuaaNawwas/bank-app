@@ -1,4 +1,5 @@
 import React from "react";
+import AddAccount from "../components/AddAccount";
 import MyFooter from "../components/Footer";
 
 import Header from "../components/Header";
@@ -8,7 +9,10 @@ export default function Home() {
 	return (
 		<>
 			<Header />
-			<Main />
+			<div className="flex gap-32 items-center px-10">
+				<Main />
+				<AddAccount />
+			</div>
 			<MyFooter />
 		</>
 	);
